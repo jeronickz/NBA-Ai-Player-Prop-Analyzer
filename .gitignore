@@ -1,0 +1,26 @@
+# Environment variables and secret API keys
+.env
+.env.local
+.env.*
+
+# Node dependencies
+node_modules/
+
+# Large local datasets and converted databases
+*.csv
+nba_stats.json
+
+# Temporary conversion scripts
+convert.js
+
+# System files and editor settings
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
