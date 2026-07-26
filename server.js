@@ -27,7 +27,14 @@ try {
     console.log("Error: Could not load nba_stats.json. Make sure it is saved in the same folder as server.js.");
 }
 
+app.get('/api/players', (req, res) => {
+    const uniquePlayers = [...new Set(nbaDataset.map(log => log.player))].sort();
+    res.json(uniquePlayers);
+});
+
 app.post('/api/analyze', async (req, res) => {
+
+    console.log("1. Request received for player:", req.body.player);
 
     const {
         player,
@@ -39,6 +46,7 @@ app.post('/api/analyze', async (req, res) => {
     } = req.body;
 
     if (!player || !stat || !line) {
+        console.log("❌ Error: Missing required fields");
         return res.status(400).json({
             error: "Missing required fields: player, stat, or line."
         });
@@ -86,7 +94,7 @@ app.post('/api/analyze', async (req, res) => {
     let aiReasoning;
 
     try {
-
+        console.log("2. Math analysis finished! Preparing to call Gemini API...");
         const promptString = `
 You are an expert NBA sports data analyst.
 
@@ -108,7 +116,7 @@ Respond strictly in valid JSON format with NO markdown formatting using exactly 
 "win_probability": ${statisticalAnalysis.hitRate},
 "reasoning": "Write exactly two sentences mentioning the season average, recent performance and historical hit rate."
 `;
-
+        console.log("3. Sending request to Google Gemini...");
         const response = await ai.models.generateContent({
             model: 'gemini-3.5-flash',
             contents: promptString,
@@ -118,6 +126,7 @@ Respond strictly in valid JSON format with NO markdown formatting using exactly 
             }
         });
 
+        console.log("4. Gemini responded successfully!");
         const responseText = response.text;
 
         const aiResponseData = JSON.parse(responseText);

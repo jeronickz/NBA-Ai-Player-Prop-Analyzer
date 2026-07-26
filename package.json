@@ -13,6 +13,7 @@
   "type": "commonjs",
   "dependencies": {
     "@google/genai": "^2.13.0",
+    "@google/generative-ai": "^0.24.1",
     "cors": "^2.8.6",
     "csvtojson": "^2.0.14",
     "dotenv": "^17.4.2",

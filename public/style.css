@@ -248,3 +248,106 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+/* Searchable Dropdown (Combobox) Styling */
+.searchable-select-container {
+    position: relative;
+    width: 100%;
+}
+
+/* The main box the user clicks */
+.searchable-select-btn {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-light);
+    color: var(--text);
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.searchable-select-btn:hover {
+    border-color: var(--primary);
+}
+
+.placeholder-text {
+    color: #7f8aa3;
+}
+
+/* The dropdown menu popup */
+.searchable-select-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-top: 6px;
+    z-index: 9999;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+}
+
+.search-input-wrapper {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    background: var(--card);
+}
+
+#player-search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card-light);
+    color: var(--text);
+    font-size: 0.95rem;
+    outline: none;
+}
+
+#player-search-input:focus {
+    border-color: var(--primary);
+}
+
+.options-list {
+    max-height: 200px;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.options-list li {
+    padding: 12px 14px;
+    color: var(--text);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.options-list li:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.options-list li.no-results {
+    color: var(--muted);
+    cursor: default;
+    text-align: center;
+}
+
+.options-list li.no-results:hover {
+    background: transparent;
+}
+
+/* Turns the player name blue when hovered OR highlighted via keyboard */
+.options-list li:hover,
+.options-list li.highlighted {
+    background: #2563eb; /* Professional dropdown selection blue */
+    color: white;
+}

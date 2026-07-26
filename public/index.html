@@ -27,13 +27,26 @@
             <form id="bet-form">
 
                 <div class="form-group">
-                    <label for="player">Player Name</label>
-                    <input
-                        type="text"
-                        id="player"
-                        placeholder="Example: LeBron James"
-                        required
-                    >
+                    <label>Player Name</label>
+                    <div class="searchable-select-container" id="player-select-container">
+                        <div class="searchable-select-btn" id="player-select-btn">
+                            <span id="selected-player-text" class="placeholder-text">Select a player...</span>
+                            <span class="dropdown-arrow">&#9662;</span>
+                        </div>
+                        <div class="searchable-select-menu hidden" id="player-select-menu">
+                            <div class="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    id="player-search-input"
+                                    placeholder="Type a name to filter..."
+                                    autocomplete="off"
+                                >
+                            </div>
+                            <ul class="options-list" id="player-options-list"></ul>
+                        </div>
+                    </div>
+                    <!-- Holds the valid player name for form submission -->
+                    <input type="hidden" id="player" required>
                 </div>
 
                 <div class="form-group">
