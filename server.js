@@ -95,27 +95,31 @@ app.post('/api/analyze', async (req, res) => {
 
     try {
         console.log("2. Math analysis finished! Preparing to call Gemini API...");
-        const promptString = `
-You are an expert NBA sports data analyst.
+        const promptString = `You are an expert quantitative NBA sports betting analyst.
 
 Evaluate this player prop bet:
-
 Will ${player} go ${betDirection} ${line} ${stat}?
+American Odds: ${odds}
+Stake Amount: $${stake}
 
 Here is the statistical analysis already calculated from the dataset:
-
 ${JSON.stringify(statisticalAnalysis, null, 2)}
 
-Based strictly on these calculated statistics, explain whether the bet is supported by the player's historical performance.
+Task:
+1. Evaluate whether this bet is supported by the player's historical performance.
+2. Calculate the bookmaker's implied win probability from the American odds (${odds}).
+3. Compare the player's historical hitRate directly against that implied market probability to evaluate the Expected Value (EV).
 
 Use the provided hitRate as the win_probability. Do not invent another probability.
 
 Respond strictly in valid JSON format with NO markdown formatting using exactly these keys:
-
-"prediction": "${betDirection}",
-"win_probability": ${statisticalAnalysis.hitRate},
-"reasoning": "Write exactly two sentences mentioning the season average, recent performance and historical hit rate."
-`;
+{
+  "prediction": "${betDirection}",
+  "win_probability": "${statisticalAnalysis.hitRate}%",
+  "expected_value": "+$XX.XX or -$XX.XX (calculate exact EV based on stake, odds, and hitRate)",
+  "is_profitable_bet": true or false (true if hitRate exceeds the implied probability),
+  "reasoning": "Write exactly two to three professional sentences: first synthesize the season average and recent performance, then explicitly state whether the historical hit rate of ${statisticalAnalysis.hitRate}% occurs at a higher or lower rate than the bookmaker's implied win probability at ${odds} odds, explaining how that divergence generates positive or negative Expected Value (EV)."
+}`;
         console.log("3. Sending request to Google Gemini...");
         const response = await ai.models.generateContent({
             model: 'gemini-3.5-flash',
